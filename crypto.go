@@ -472,11 +472,7 @@ type passwordFn func() []byte
 // contents will be encrypted with AES-256 using the given password. The
 // file's contents must be written to the io.Writer before the next call
 // to Create, CreateHeader, or Close.
-func (w *Writer) Encrypt(name string, password string, enc EncryptionMethod) (io.Writer, error) {
-	fh := &FileHeader{
-		Name:   name,
-		Method: Deflate,
-	}
+func (w *Writer) Encrypt(fh *FileHeader, password string, enc EncryptionMethod) (io.Writer, error) {
 	fh.SetPassword(password)
 	fh.setEncryptionMethod(enc)
 	return w.CreateHeader(fh)
